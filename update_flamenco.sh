@@ -6,7 +6,7 @@ DIRECTORY_DOWNLOAD="$HOME/Downloads"
 DIRECTORY_INSTALL="/opt/flamenco"
 DIRECTORY_RUN="/usr/local/bin"
 
-mkdir -p $DIRECTORY_INSTALL
+sudo mkdir -p $DIRECTORY_INSTALL
 
 # Construct the download URL for the latest release archive.
 NAME_ARCHIVE=$(curl -s $URL_PAGE | grep -oP '(?<=href=")[^"]+linux-amd64[^"]+(?=")' | head -n 1)

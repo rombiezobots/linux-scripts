@@ -5,7 +5,7 @@ DIRECTORY_DOWNLOAD="$HOME/Downloads"
 DIRECTORY_INSTALL="/opt/blender"
 DIRECTORY_RUN="/usr/local/bin"
 
-mkdir -p $DIRECTORY_INSTALL
+sudo mkdir -p $DIRECTORY_INSTALL
 
 # Determine the latest version directory on the Blender website.
 VERSION_MAJOR=$(curl -s $URL_BASE | grep -oP '(?<=href=")Blender\d+\.\d+\/(?=")' | sort -V | tail -n 1)
