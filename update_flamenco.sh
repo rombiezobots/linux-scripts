@@ -39,8 +39,8 @@ else
 fi
 
 # Shut down flamenco-worker and flamenco-manager
-kill flamenco-worker
-kill flamenco-manager
+killall flamenco-worker
+killall flamenco-manager
 
 # Extract and remove the archive.
 echo "Extracting $DOWNLOAD_ARCHIVE..."
