@@ -53,6 +53,7 @@ sudo mv $DOWNLOAD_FOLDER $DIRECTORY_INSTALL
 echo "Moved folder to $INSTALL_FOLDER"
 
 # Update the GNOME desktop entry.
+sed -i 's/Terminal=false/Terminal=true/g' "$INSTALL_FOLDER/blender.desktop"
 cp "$INSTALL_FOLDER/blender.desktop" "$HOME/.local/share/applications/blender.desktop"
 update-desktop-database "$HOME/.local/share/applications/"
 echo "Updated $HOME/.local/share/applications/blender.desktop"
