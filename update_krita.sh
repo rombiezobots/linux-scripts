@@ -20,7 +20,7 @@ DOWNLOAD_APPIMAGE="$DIRECTORY_DOWNLOAD/$NAME_APPIMAGE"
 INSTALL_APPIMAGE="$DIRECTORY_INSTALL/$NAME_APPIMAGE"
 
 # Exit if the version is already installed.
-if [[ -d $INSTALL_APPIMAGE ]]; then
+if [[ -f $INSTALL_APPIMAGE ]]; then
     echo "$INSTALL_APPIMAGE is already installed."
     exit
 fi
@@ -38,8 +38,15 @@ else
     echo "$DOWNLOAD_APPIMAGE has already been downloaded."
 fi
 
-# Allow executing and move the AppImage to the install directory.
+# Extract and edit the .desktop file.
 chmod +x $DOWNLOAD_APPIMAGE
+$DOWNLOAD_APPIMAGE --appimage-extract "org.kde.krita.desktop"
+sed -i 's/Icon=krita/Icon=org.kde.krita/g' "$DIRECTORY_DOWNLOAD/squashfs-root/org.kde.krita.desktop"
+mv "$DIRECTORY_DOWNLOAD/squashfs-root/org.kde.krita.desktop" "$HOME/.local/share/applications/krita.desktop"
+rm -R "$DIRECTORY_DOWNLOAD/squashfs-root"
+echo "Updated $HOME/.local/share/applications/krita.desktop"
+
+# Allow executing and move the AppImage to the install directory.
 sudo mv $DOWNLOAD_APPIMAGE $INSTALL_APPIMAGE
 echo "Moved AppImage to $INSTALL_APPIMAGE"
 
