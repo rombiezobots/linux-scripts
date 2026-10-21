@@ -38,9 +38,14 @@ else
     echo "$DOWNLOAD_ARCHIVE has already been downloaded."
 fi
 
-# Shut down flamenco-worker and flamenco-manager
-killall flamenco-worker
-killall flamenco-manager
+# Stop the flamenco-worker and flamenco-manager services if they are running.
+if pgrep -x "flamenco-worker" > /dev/null || pgrep -x "flamenco-manager" > /dev/null; then
+    echo "Stopping flamenco-worker and flamenco-manager services..."
+    sudo systemctl stop flamenco-worker
+    sudo systemctl stop flamenco-manager
+else
+    echo "No running flamenco-worker or flamenco-manager services found."
+fi
 
 # Extract and remove the archive.
 echo "Extracting $DOWNLOAD_ARCHIVE..."
@@ -56,3 +61,7 @@ sudo ln -sf "$INSTALL_FOLDER/flamenco-manager" "$DIRECTORY_RUN/flamenco-manager"
 echo "Updated symbolic link $DIRECTORY_RUN/flamenco-manager -> $INSTALL_FOLDER/flamenco-manager"
 sudo ln -sf "$INSTALL_FOLDER/flamenco-worker" "$DIRECTORY_RUN/flamenco-worker"
 echo "Updated symbolic link $DIRECTORY_RUN/flamenco-worker -> $INSTALL_FOLDER/flamenco-worker"
+
+# Start the services again.
+sudo systemctl start flamenco-manager
+sudo systemctl start flamenco-worker
